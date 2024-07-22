@@ -1,0 +1,42 @@
+Configure Apache2
+
+time stamp
+source.ip (goc)
+url.query / url.original
+http.response.status_code
+
+Se co log 200 xan ke log 401 => thinh thoa MySQL log
+1 - Exclude log cua: /var/log/mysql/query.log - log.file.path
+2 - Exlclude log cua: /vulnerabilities/brute/ - url.original (.text)
+
+Thinh thoang co url
+url.original: /server-status?auto=
+url.path: /server-status
+url.query: auto=
+
+log.file.path
+
+Su khac nhau logs rac
+url.original
+/vulnerabilities/brute/
+url.path
+/vulnerabilities/brute/
+ 
+___
+url.original
+/vulnerabilities/brute/?username=admin&password=password&Login=Login&user_token=ac3a5edd4b0bd1ca4033062361429429
+url.path
+/vulnerabilities/brute/
+url.query
+username=admin&password=password&Login=Login&user_token=ac3a5edd4b0bd1ca4033062361429429
+
+It work when:
+- Not log.file.path: /var/log/MySQL/query.log
+- Not url.path: /server-status
+- url.query: exists
+
+=> Attack brute force khi: 1 ip nhieu lan nhung url.query phai ton tai
+
+Permission chi setup cho ho mot Data View cu the
+
+@timestamp < event.created < event.ingested
